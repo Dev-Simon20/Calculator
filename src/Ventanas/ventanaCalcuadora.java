@@ -11,6 +11,8 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
     private double numero1, resultado;
     private String operation = "nula";
     private boolean activado = true;
+    private String cadenaAux = "";
+    private boolean punt = true;
 
     public ventanaCalcuadora() {
         initComponents();
@@ -87,6 +89,11 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
 
         clear.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         clear.setText("C");
+        clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -307,6 +314,11 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
 
         smenmas.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         smenmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/download.png"))); // NOI18N
+        smenmas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smenmasActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -333,6 +345,11 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
 
         punto.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         punto.setText(".");
+        punto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                puntoActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
@@ -482,12 +499,14 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
     }//GEN-LAST:event_n9ActionPerformed
 
     private void nposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nposActionPerformed
-        if (activado == true) {
+        if (activado == true && cadena != "") {
             numero1 = Double.parseDouble(cadena);
             etiquetaMuestra.setText(cadena + "+");
+            cadenaAux = cadena;
             cadena = "";
             operation = "suma";
             activado = false;
+            punt = true;
         }
 
     }//GEN-LAST:event_nposActionPerformed
@@ -496,20 +515,58 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
         double numero2;
 
         if (operation.equals("nula") || cadena == "") {
-            etiquetaNumero.setText(cadena);
+            etiquetaNumero.setText(cadenaAux);
+            cadena = cadenaAux;
+            operation = "nula";
         } else if (operation.equals("suma")) {
-
             numero2 = Double.parseDouble(cadena);
             resultado = numero1 + numero2;
+            cadenaAux = String.valueOf(resultado);
             etiquetaNumero.setText(String.format("%.2f", resultado));
             cadena = String.valueOf(resultado);
             operation = "nula";
+
         }
         etiquetaMuestra.setText("");
         activado = true;
-        
+
 
     }//GEN-LAST:event_igualActionPerformed
+
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        cadena = "";
+        etiquetaMuestra.setText(cadena);
+        etiquetaNumero.setText(cadena);
+        punt = true;
+
+    }//GEN-LAST:event_clearActionPerformed
+
+    private void puntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puntoActionPerformed
+        if (punt == true) {
+
+            if (cadena == "") {
+                cadena += "0.";
+            } else {
+                cadena += ".";
+            }
+            etiquetaNumero.setText(cadena);
+            punt = false;
+
+        }
+    }//GEN-LAST:event_puntoActionPerformed
+
+    private void smenmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smenmasActionPerformed
+        if (cadena == "") {
+            cadena = cadenaAux;
+        }
+        if (cadena.charAt(0) != '-') {
+            cadena = "-" + cadena;
+        } else {
+            cadena = cadena.substring(1, cadena.length());
+        }
+        etiquetaNumero.setText(cadena);
+        activado = true;
+    }//GEN-LAST:event_smenmasActionPerformed
 
     /**
      * @param args the command line arguments
