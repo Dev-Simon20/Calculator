@@ -103,6 +103,11 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
         panel.add(clear, gridBagConstraints);
 
         raiz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/raiz.png"))); // NOI18N
+        raiz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                raizActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -112,6 +117,11 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
         panel.add(raiz, gridBagConstraints);
 
         division.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/div.png"))); // NOI18N
+        division.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                divisionActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -121,6 +131,11 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
         panel.add(division, gridBagConstraints);
 
         eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/clear.png"))); // NOI18N
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
@@ -180,6 +195,11 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
 
         nx.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         nx.setText("x");
+        nx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nxActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 3;
@@ -239,6 +259,11 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
 
         nneg.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         nneg.setText("-");
+        nneg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nnegActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 4;
@@ -525,8 +550,30 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
             etiquetaNumero.setText(String.format("%.2f", resultado));
             cadena = String.valueOf(resultado);
             operation = "nula";
-
+        }else if (operation.equals("resta")) {
+            numero2 = Double.parseDouble(cadena);
+            resultado = numero1 - numero2;
+            cadenaAux = String.valueOf(resultado);
+            etiquetaNumero.setText(String.format("%.2f", resultado));
+            cadena = String.valueOf(resultado);
+            operation = "nula";
+        }else if (operation.equals("multiplicacion")) {
+            numero2 = Double.parseDouble(cadena);
+            resultado = numero1 * numero2;
+            cadenaAux = String.valueOf(resultado);
+            etiquetaNumero.setText(String.format("%.2f", resultado));
+            cadena = String.valueOf(resultado);
+            operation = "nula";
+        }else if (operation.equals("division")) {
+            numero2 = Double.parseDouble(cadena);
+            resultado = numero1 / numero2;
+            cadenaAux = String.valueOf(resultado);
+            etiquetaNumero.setText(String.format("%.2f", resultado));
+            cadena = String.valueOf(resultado);
+            operation = "nula";
         }
+        
+
         etiquetaMuestra.setText("");
         activado = true;
 
@@ -534,10 +581,12 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
     }//GEN-LAST:event_igualActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        //BORRAR TODO
         cadena = "";
         etiquetaMuestra.setText(cadena);
         etiquetaNumero.setText(cadena);
         punt = true;
+        cadenaAux = "";
 
     }//GEN-LAST:event_clearActionPerformed
 
@@ -562,11 +611,83 @@ public class ventanaCalcuadora extends javax.swing.JFrame {
         if (cadena.charAt(0) != '-') {
             cadena = "-" + cadena;
         } else {
-            cadena = cadena.substring(1, cadena.length());
+            cadena = cadena.substring(1, cadena.length());//recorre el String de la posicion uno hasta el ultimo.
+
         }
         etiquetaNumero.setText(cadena);
         activado = true;
     }//GEN-LAST:event_smenmasActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+       //eliminar carcater por caracter
+        int longitud = cadena.length(); //obteniendo el numero de caracteres del String
+        if (longitud > 0) {
+            cadena = cadena.substring(0, cadena.length() - 1);
+            
+        }
+        else{
+        activado=false;
+        cadenaAux="";
+        }
+        etiquetaNumero.setText(cadena);
+        punt = true;
+        
+        
+    }//GEN-LAST:event_eliminarActionPerformed
+
+    private void nnegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nnegActionPerformed
+        //RESTA
+        if (activado == true && cadena != "") {
+            numero1 = Double.parseDouble(cadena);
+            etiquetaMuestra.setText(cadena + "-");
+            cadenaAux = cadena;
+            cadena = "";
+            operation = "resta";
+            activado = false;
+            punt = true;
+        }
+
+    }//GEN-LAST:event_nnegActionPerformed
+
+    private void nxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nxActionPerformed
+        //Multiplicacion
+        if (activado == true && cadena != "") {
+            numero1 = Double.parseDouble(cadena);
+            etiquetaMuestra.setText(cadena + "x");
+            cadenaAux = cadena;
+            cadena = "";
+            operation = "multiplicacion";
+            activado = false;
+            punt = true;
+        }
+    }//GEN-LAST:event_nxActionPerformed
+
+    private void divisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divisionActionPerformed
+        // Division
+        if (activado == true && cadena != "") {
+            numero1 = Double.parseDouble(cadena);
+            etiquetaMuestra.setText(cadena + "/ ");
+            cadenaAux = cadena;
+            cadena = "";
+            operation = "division";
+            activado = false;
+            punt = true;
+        }
+    }//GEN-LAST:event_divisionActionPerformed
+
+    private void raizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_raizActionPerformed
+        //Raiz cuadrada
+        if (activado == true && cadena != "") {
+            numero1 = Double.parseDouble(cadena);
+            etiquetaMuestra.setText("sqrt("+cadena+") ");
+            resultado=Math.sqrt(numero1);
+            etiquetaNumero.setText(String.format("%2f", resultado));
+            cadena=String.valueOf(resultado);
+            cadenaAux = cadena;
+            activado = true;
+            punt=false;
+        }
+    }//GEN-LAST:event_raizActionPerformed
 
     /**
      * @param args the command line arguments
