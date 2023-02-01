@@ -17,13 +17,20 @@ public class ventanaConversor extends javax.swing.JFrame {
     public ventanaConversor() {
         initComponents();
         setLocationRelativeTo(null);
-        setSize(260,400);
-        llenarCombo();
+        setSize(260, 400);
+        llenarCombos();
     }
-    private void llenarCombo(){
-       combo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estados Unidos-Dólar", "Perú- Nuevo Sol", "Europa- Euro" }));
-       combo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estados Unidos-Dólar", "Perú- Nuevo Sol", "Europa- Euro"}));
+
+    private void llenarCombos() {  //"Estados Unidos-Dólar", "Perú- Nuevo Sol", "Europa- Euro"
+        cboMoney1.addItem("Estados Unidos-Dólar");
+        cboMoney1.addItem("Perú- Nuevo Sol");
+        cboMoney1.addItem("Europa- Euro");
+
+        comboMoney2.addItem("Estados Unidos-Dólar");
+        comboMoney2.addItem("Perú- Nuevo Sol");
+        comboMoney2.addItem("Europa- Euro");
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,9 +43,9 @@ public class ventanaConversor extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         pantalla1 = new javax.swing.JLabel();
-        combo1 = new javax.swing.JComboBox<>();
+        cboMoney1 = new javax.swing.JComboBox<>();
         pantalla2 = new javax.swing.JLabel();
-        combo2 = new javax.swing.JComboBox<>();
+        comboMoney2 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -76,10 +83,14 @@ public class ventanaConversor extends javax.swing.JFrame {
         gridBagConstraints.weighty = 0.5;
         jPanel1.add(pantalla1, gridBagConstraints);
 
-        combo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        combo1.addActionListener(new java.awt.event.ActionListener() {
+        cboMoney1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboMoney1ItemStateChanged(evt);
+            }
+        });
+        cboMoney1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combo1ActionPerformed(evt);
+                cboMoney1ActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -89,7 +100,7 @@ public class ventanaConversor extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
-        jPanel1.add(combo1, gridBagConstraints);
+        jPanel1.add(cboMoney1, gridBagConstraints);
 
         pantalla2.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         pantalla2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -103,7 +114,16 @@ public class ventanaConversor extends javax.swing.JFrame {
         gridBagConstraints.weighty = 0.5;
         jPanel1.add(pantalla2, gridBagConstraints);
 
-        combo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboMoney2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboMoney2ItemStateChanged(evt);
+            }
+        });
+        comboMoney2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboMoney2ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -111,7 +131,7 @@ public class ventanaConversor extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
-        jPanel1.add(combo2, gridBagConstraints);
+        jPanel1.add(comboMoney2, gridBagConstraints);
 
         jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton2.setText("c");
@@ -290,7 +310,7 @@ public class ventanaConversor extends javax.swing.JFrame {
 
     private void cItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cItem1ActionPerformed
         // TODO add your handling code here:
-        ventanaCalcuadora calcu= new ventanaCalcuadora();
+        ventanaCalcuadora calcu = new ventanaCalcuadora();
         calcu.setVisible(true);
         dispose();
     }//GEN-LAST:event_cItem1ActionPerformed
@@ -304,14 +324,35 @@ public class ventanaConversor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton13ActionPerformed
 
-    private void combo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo1ActionPerformed
-        if (combo1.getItemAt(0).equals("Estados Unidos-Dólar")) {
+    private void cboMoney1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMoney1ActionPerformed
+
+    }//GEN-LAST:event_cboMoney1ActionPerformed
+
+    private void cboMoney1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboMoney1ItemStateChanged
+        String money = (String) cboMoney1.getSelectedItem();
+        if (money.equals("Estados Unidos-Dólar")) {
             pantalla1.setText("Dolar");
-        }
-        else if(combo1.getItemAt(1).equals("Perú- Nuevo Sol")){
+        }else if(money.equals("Perú- Nuevo Sol")){
             pantalla1.setText("Sol");
+        }else if(money.equals("Europa- Euro")){
+            pantalla1.setText("Euro");
         }
-    }//GEN-LAST:event_combo1ActionPerformed
+    }//GEN-LAST:event_cboMoney1ItemStateChanged
+
+    private void comboMoney2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMoney2ActionPerformed
+
+    }//GEN-LAST:event_comboMoney2ActionPerformed
+
+    private void comboMoney2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboMoney2ItemStateChanged
+        String mon = (String) comboMoney2.getSelectedItem();
+        if (mon.equals("Estados Unidos-Dólar")) {
+            pantalla1.setText("Dolar");
+        }else if(mon.equals("Perú- Nuevo Sol")){
+            pantalla1.setText("Sol");
+        }else if(mon.equals("Europa- Euro")){
+            pantalla1.setText("Euro");
+        }
+    }//GEN-LAST:event_comboMoney2ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -354,8 +395,8 @@ public class ventanaConversor extends javax.swing.JFrame {
     private javax.swing.JMenuItem cItem1;
     private javax.swing.JMenuItem cItem2;
     private javax.swing.JMenuItem cItem3;
-    private javax.swing.JComboBox<String> combo1;
-    private javax.swing.JComboBox<String> combo2;
+    private javax.swing.JComboBox<String> cboMoney1;
+    private javax.swing.JComboBox<String> comboMoney2;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
